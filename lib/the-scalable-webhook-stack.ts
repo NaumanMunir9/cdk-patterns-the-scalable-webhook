@@ -69,5 +69,20 @@ export class TheScalableWebhookStack extends Stack {
         QUEUE_URL: queue.queueUrl,
       },
     });
+
+    // =============================================================================
+    /**
+     * grant access to receive messages from a queue to the given identity
+     */
+    queue.grantSendMessages(subscribeLambda);
+
+    // =============================================================================
+    /**
+     * Adds an event source to this function
+     * Use an Amazon SQS queue as an event source for AWS Lambda
+     */
+    subscribeLambda.addEventSource(
+      new lambdaEventSources.SqsEventSource(queue)
+    );
   }
 }

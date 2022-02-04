@@ -38,10 +38,10 @@ const sendRes = (statusCode: number, body: string) => {
     statusCode,
     body: JSON.stringify(body),
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+      "Access-Control-Allow-Credentials": true, // Required for cookies, authorization headers with HTTPS
       "Content-Type": "application/json",
-      "X-Content-Type-Options": "nosniff",
+      "X-Content-Type-Options": "nosniff", // XSS protection
     },
   };
 };

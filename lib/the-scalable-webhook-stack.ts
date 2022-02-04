@@ -91,5 +91,13 @@ export class TheScalableWebhookStack extends Stack {
      * BatchGetItem, GetRecords, GetShardIterator, Query, GetItem, Scan, BatchWriteItem, PutItem, UpdateItem, DeleteItem
      */
     table.grantReadWriteData(subscribeLambda);
+
+    // =============================================================================
+    /**
+     * Defines an API Gateway REST API with AWS Lambda proxy integration
+     */
+    const api = new apigateway.LambdaRestApi(this, "Api", {
+      handler: publishLambda,
+    });
   }
 }

@@ -17,4 +17,19 @@ export async function handler(event: any) {
       },
     },
   };
+
+  let response;
 }
+
+const sendRes = (statusCode: number, body: string) => {
+  return {
+    statusCode,
+    body: JSON.stringify(body),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+      "Content-Type": "application/json",
+      "X-Content-Type-Options": "nosniff",
+    },
+  };
+};

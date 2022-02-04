@@ -84,5 +84,12 @@ export class TheScalableWebhookStack extends Stack {
     subscribeLambda.addEventSource(
       new lambdaEventSources.SqsEventSource(queue)
     );
+
+    // =============================================================================
+    /**
+     * Permits an IAM principal to all data read/write operations to this table.
+     * BatchGetItem, GetRecords, GetShardIterator, Query, GetItem, Scan, BatchWriteItem, PutItem, UpdateItem, DeleteItem
+     */
+    table.grantReadWriteData(subscribeLambda);
   }
 }

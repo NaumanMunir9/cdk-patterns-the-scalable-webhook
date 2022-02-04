@@ -7,7 +7,7 @@ export async function handler(event: any) {
 
   // params
   const params = {
-    QueueUrl: process.env.QUEUE_URL,
+    QueueUrl: process.env.QUEUE_URL || "",
     MessageBody: `Hey There ${event.path}`,
     DelaySeconds: 10,
     MessageAttributes: {
@@ -19,6 +19,18 @@ export async function handler(event: any) {
   };
 
   let response;
+
+  await sqs
+    .sendMessage(params, (err: any, data: any) => {
+      if (err) {
+        console.log(`Error: ${JSON.stringify(err, undefined, 2)}`);
+        response = sendRes(500, err);
+      } else {
+        console.log(`Data: ${JSON.stringify(data, undefined, 2)}`);
+        response = sendRes(200, data.MessageId);
+      }
+    })
+    .promise();
 }
 
 const sendRes = (statusCode: number, body: string) => {

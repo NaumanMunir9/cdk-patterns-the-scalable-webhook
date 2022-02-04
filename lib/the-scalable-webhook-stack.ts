@@ -48,5 +48,11 @@ export class TheScalableWebhookStack extends Stack {
         QUEUE_URL: queue.queueUrl,
       },
     });
+
+    // =============================================================================
+    /**
+     * Grant access to send messages to a queue to the given identity
+     */
+    queue.grantSendMessages(publishLambda);
   }
 }

@@ -36,5 +36,17 @@ export class TheScalableWebhookStack extends Stack {
     });
 
     // =============================================================================
+    /**
+     * publish Lambda
+     * Deploys a file from inside the construct library as a function.
+     */
+    const publishLambda = new lambda.Function(this, "PublishLambda", {
+      runtime: lambda.Runtime.NODEJS_14_X,
+      handler: "publish.handler",
+      code: lambda.Code.fromAsset("lambda"),
+      environment: {
+        QUEUE_URL: queue.queueUrl,
+      },
+    });
   }
 }

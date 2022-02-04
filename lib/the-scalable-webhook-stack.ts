@@ -54,5 +54,20 @@ export class TheScalableWebhookStack extends Stack {
      * Grant access to send messages to a queue to the given identity
      */
     queue.grantSendMessages(publishLambda);
+
+    // =============================================================================
+    /**
+     * subscribe Lambda
+     * Deploys a file from inside the construct library as a function
+     */
+    const subscribeLambda = new lambda.Function(this, "SubscribeLambda", {
+      runtime: lambda.Runtime.NODEJS_14_X,
+      handler: "subscribe.handler",
+      code: lambda.Code.fromAsset("lambda"),
+      environment: {
+        TABLE_NAME: table.tableName,
+        QUEUE_URL: queue.queueUrl,
+      },
+    });
   }
 }

@@ -23,5 +23,18 @@ export class TheScalableWebhookStack extends Stack {
       readCapacity: 1,
       removalPolicy: cdk.RemovalPolicy.DESTROY,
     });
+
+    // =============================================================================
+    /**
+     * Create a SQS queue
+     */
+    const queue = new sqs.Queue(this, "Queue", {
+      queueName: "the-scalable-webhook-queue",
+      visibilityTimeout: cdk.Duration.seconds(300),
+      retentionPeriod: cdk.Duration.days(14),
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+    });
+
+    // =============================================================================
   }
 }
